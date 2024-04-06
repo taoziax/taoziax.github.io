@@ -13,8 +13,6 @@
     
     <categories>
       
-      <category>Linux</category>
-      
       <category>Docker</category>
       
       <category>运维</category>
@@ -46,8 +44,6 @@
     
     <categories>
       
-      <category>Linux</category>
-      
       <category>运维</category>
       
     </categories>
@@ -78,8 +74,6 @@
     
     
     <categories>
-      
-      <category>Linux</category>
       
       <category>MySQL</category>
       
@@ -114,8 +108,6 @@
     
     <categories>
       
-      <category>Linux</category>
-      
       <category>运维</category>
       
     </categories>
@@ -146,8 +138,6 @@
     
     
     <categories>
-      
-      <category>Linux</category>
       
       <category>Nginx</category>
       
