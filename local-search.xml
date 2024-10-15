@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>MySQL主从搭建</title>
+    <link href="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/"/>
+    <url>/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Docker理解与安装</title>
     <link href="/2023/11/30/Docker%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%89%E8%A3%85/"/>
     <url>/2023/11/30/Docker%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%89%E8%A3%85/</url>
@@ -77,8 +90,6 @@
       
       <category>MySQL</category>
       
-      <category>运维</category>
-      
     </categories>
     
     
@@ -86,11 +97,7 @@
       
       <tag>Linux</tag>
       
-      <tag>运维</tag>
-      
       <tag>MySQL</tag>
-      
-      <tag>主从同步</tag>
       
     </tags>
     
