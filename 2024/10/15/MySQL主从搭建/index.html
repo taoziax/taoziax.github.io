@@ -17,17 +17,22 @@
   <meta name="author" content="Taozi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Taozi个人博客">
+    <meta name="description" content="主从复制简介123主从复制时基于二进制日志进行复制的主库的修改会记录二进制日志从库请求二进制日志解析SQL语句并执行，从而达到主从数据同步  前提123456两台以上mysql实例 ,server_id,server_uuid不同主库开启二进制日志主库建立专用同步用户主从开启时间点，主从数据需要一致 告诉从库复制IP，user，passwd，以及二进制文件和复制起点开启复制线程  (start s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL主从搭建">
 <meta property="og:url" content="https://yftxhy.cn/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="Taozi">
-<meta property="og:description" content="Taozi个人博客">
+<meta property="og:description" content="主从复制简介123主从复制时基于二进制日志进行复制的主库的修改会记录二进制日志从库请求二进制日志解析SQL语句并执行，从而达到主从数据同步  前提123456两台以上mysql实例 ,server_id,server_uuid不同主库开启二进制日志主库建立专用同步用户主从开启时间点，主从数据需要一致 告诉从库复制IP，user，passwd，以及二进制文件和复制起点开启复制线程  (start s">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yftxhy.cn/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090814751.png">
+<meta property="og:image" content="https://yftxhy.cn/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090949626.png">
 <meta property="article:published_time" content="2024-10-15T07:23:51.000Z">
-<meta property="article:modified_time" content="2024-10-15T07:23:51.379Z">
+<meta property="article:modified_time" content="2024-10-15T07:29:09.470Z">
 <meta property="article:author" content="Taozi">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yftxhy.cn/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090814751.png">
   
   
   
@@ -234,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          1k 字
         
       </span>
     
@@ -245,7 +250,7 @@
         
         
         
-          1 分钟
+          9 分钟
         
       </span>
     
@@ -287,7 +292,46 @@
             
               <div class="markdown-body">
                 
-                
+                <h3 id="主从复制简介"><a href="#主从复制简介" class="headerlink" title="主从复制简介"></a>主从复制简介</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">主从复制时基于二进制日志进行复制的<br>主库的修改会记录二进制日志<br>从库请求二进制日志解析<span class="hljs-keyword">SQL</span>语句并执行，从而达到主从数据同步<br></code></pre></td></tr></table></figure>
+
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">两台以上mysql实例 ,server_id,server_uuid不同<br>主库开启二进制日志<br>主库建立专用同步用户<br>主从开启时间点，主从数据需要一致 <br>告诉从库复制IP，user，passwd，以及二进制文件和复制起点<br>开启复制线程  (<span class="hljs-literal">start</span> <span class="hljs-literal">slave</span>;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="搭建环境："><a href="#搭建环境：" class="headerlink" title="搭建环境："></a>搭建环境：</h3><p>主库：192.168.177.200</p>
+<p>从库：192.168.177.201</p>
+<p>mysql版本：5.7.41</p>
+<h3 id="主库"><a href="#主库" class="headerlink" title="主库"></a>主库</h3><hr>
+<h4 id="设置主库server-id并开启主库二进制"><a href="#设置主库server-id并开启主库二进制" class="headerlink" title="设置主库server-id并开启主库二进制"></a>设置主库server-id并开启主库二进制</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros">vim /etc/my.cnf<br><span class="hljs-comment">#开启二进制日志指定文件路径</span><br><span class="hljs-attribute">log-bin</span>=/web/logs/mysql/binlog/mysql-bin<br><span class="hljs-comment">#设置serverID</span><br><span class="hljs-attribute">server-id</span>=1<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090814751.png" srcset="/img/lazyload_h.gif" lazyload></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">主从server-<span class="hljs-built_in">id</span>不能相同<br>每个 MySQL 服务器在主从复制架构中需要有一个唯一的标识符。server_id用于区分不同的服务器实例。如果多个服务器具有相同的 server_id，那么在复制过程中会产生冲突和混乱。<br>如果主从服务器的 server_id 相同，可能会导致双主循环复制的问题，可能会使数据库陷入混乱或崩溃。<br></code></pre></td></tr></table></figure>
+
+<h4 id="主库中创建专用复制用户"><a href="#主库中创建专用复制用户" class="headerlink" title="主库中创建专用复制用户"></a>主库中创建专用复制用户</h4><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">mysql -u root -p                                                         <span class="hljs-comment">//登录mysql终端</span><br><span class="hljs-keyword">CREATE</span> USER <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span><span class="hljs-punctuation">;</span>               <span class="hljs-comment">//创建用户</span><br>GRANT REPLICATION SLAVE <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span><span class="hljs-punctuation">;</span> 			    <span class="hljs-comment">//授予权限</span><br>flush privileges<span class="hljs-punctuation">;</span>                                        			    <span class="hljs-comment">//刷新权限</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="查看二进制文件"><a href="#查看二进制文件" class="headerlink" title="查看二进制文件"></a>查看二进制文件</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">mysql&gt;  show master status\G;<br><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">*** 1. row **</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span>*<br><span class="hljs-code">             File: mysql-bin.000003</span><br><span class="hljs-code">         Position: 1059</span><br><span class="hljs-code">     Binlog_Do_DB: </span><br><span class="hljs-code"> Binlog_Ignore_DB: </span><br><span class="hljs-code">Executed_Gtid_Set: 6533bab9-8a0a-11ef-b891-000c299acf13:1-5</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="从库"><a href="#从库" class="headerlink" title="从库"></a>从库</h3><hr>
+<h4 id="设置从库server-id"><a href="#设置从库server-id" class="headerlink" title="设置从库server-id"></a>设置从库server-id</h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">vim /etc/<span class="hljs-keyword">my</span>.cnf<br><span class="hljs-comment">#设置serverID</span><br>server-<span class="hljs-built_in">id</span>=<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090949626.png" srcset="/img/lazyload_h.gif" lazyload></p>
+<h4 id="执行同步SQL语句"><a href="#执行同步SQL语句" class="headerlink" title="执行同步SQL语句"></a>执行同步SQL语句</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs 1c">CHANGE MASTER TO<br>  MASTER_HOST=&#x27;192.168.177.200&#x27;,<br>  MASTER_USER=&#x27;repl&#x27;,<br>  MASTER_PASSWORD=&#x27;<span class="hljs-number">123456</span>&#x27;,<br>  MASTER_PORT=<span class="hljs-number">3306</span>,<br>  MASTER_LOG_FILE=&#x27;mysql-bin.<span class="hljs-number">000003</span>&#x27;,<br>  MASTER_LOG_POS=<span class="hljs-number">1059</span>,<br>  MASTER_CONNECT_RETRY=<span class="hljs-number">10</span>;<br>  <br>  CHANGE MASTER TO            <br>  MASTER_HOST                 <span class="hljs-comment">//主库的 IP 地址</span><br>  MASTER_USER                 <span class="hljs-comment">//连接主库进行复制的用户名</span><br>  MASTER_PASSWORD             <span class="hljs-comment">//连接主库的用户密码</span><br>  MASTER_PORT                 <span class="hljs-comment">//主库的端口号</span><br>  MASTER_LOG_FILE             <span class="hljs-comment">//指定主库同步二进制日志文件名</span><br>  MASTER_LOG_POS              <span class="hljs-comment">//二进制文件开始同步位置</span><br>  MASTER_CONNECT_RETRY        <span class="hljs-comment">//连接主库失败后重试时间间隔(s)</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="开启同步进程"><a href="#开启同步进程" class="headerlink" title="开启同步进程"></a>开启同步进程</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-literal">start</span> <span class="hljs-literal">slave</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="查看同步状态"><a href="#查看同步状态" class="headerlink" title="查看同步状态"></a>查看同步状态</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">mysql&gt;</span> <span class="hljs-string">show</span> <span class="hljs-string">slave</span> <span class="hljs-string">status\G;</span><br><span class="hljs-string">***************************</span> <span class="hljs-number">1</span><span class="hljs-string">.</span> <span class="hljs-string">row</span> <span class="hljs-string">***************************</span><br>               <span class="hljs-attr">Slave_IO_State:</span> <span class="hljs-string">Waiting</span> <span class="hljs-string">for</span> <span class="hljs-string">master</span> <span class="hljs-string">to</span> <span class="hljs-string">send</span> <span class="hljs-string">event</span><br>                  <span class="hljs-attr">Master_Host:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.177</span><span class="hljs-number">.200</span><br>                  <span class="hljs-attr">Master_User:</span> <span class="hljs-string">repl</span><br>                  <span class="hljs-attr">Master_Port:</span> <span class="hljs-number">3306</span><br>                <span class="hljs-attr">Connect_Retry:</span> <span class="hljs-number">10</span><br>              <span class="hljs-attr">Master_Log_File:</span> <span class="hljs-string">mysql-bin.000003</span><br>          <span class="hljs-attr">Read_Master_Log_Pos:</span> <span class="hljs-number">1059</span><br>               <span class="hljs-attr">Relay_Log_File:</span> <span class="hljs-string">localhost-relay-bin.000002</span><br>                <span class="hljs-attr">Relay_Log_Pos:</span> <span class="hljs-number">320</span><br>        <span class="hljs-attr">Relay_Master_Log_File:</span> <span class="hljs-string">mysql-bin.000003</span><br>             <span class="hljs-attr">Slave_IO_Running:</span> <span class="hljs-literal">Yes</span><br>            <span class="hljs-attr">Slave_SQL_Running:</span> <span class="hljs-literal">Yes</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="主从复制原理"><a href="#主从复制原理" class="headerlink" title="主从复制原理"></a>主从复制原理</h3><p>线程</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">主:</span><br>Binlog_Dump_Thread<br><span class="hljs-section">从:</span><br>Slave_IO_Thread<br>Slave_SQL_Thread<br></code></pre></td></tr></table></figure>
+
+<p>文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">主:<br>mysql-bin.000003             二进制日志<br>从: <br>dbname-relay-bin.000002      中继日志<br>master.<span class="hljs-built_in">info</span>                  主库信息记录日志<br>relay-log.<span class="hljs-built_in">info</span>               记录中继应用情况信息<br></code></pre></td></tr></table></figure>
+
+<p>描述</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1.</span>  change master <span class="hljs-keyword">to</span> 时，ip pot <span class="hljs-keyword">user</span> <span class="hljs-keyword">password</span> binlog position写入到从库master.<span class="hljs-keyword">info</span>进行记录<br><span class="hljs-number">2.</span>  <span class="hljs-keyword">start</span> slave 时，从库会启动IO线程和<span class="hljs-keyword">SQL</span>线程<br><span class="hljs-number">3.</span>  IO_T，读取master.<span class="hljs-keyword">info</span>信息，获取主库信息连接主库<br><span class="hljs-number">4.</span>  主库会生成一个准备binlog DUMP线程，来响应从库<br><span class="hljs-number">5.</span>  IO_T根据master.<span class="hljs-keyword">info</span>记录的binlog文件名和position号，请求主库DUMP最新日志<br><span class="hljs-number">6.</span>  DUMP线程检查主库的binlog日志，如果有新的，TP(传送)给从库的IO_T<br><span class="hljs-number">7.</span>  IO_T将收到的日志存储到了TCP/IP 缓存，立即返回ACK给主库 ，主库工作完成<br><span class="hljs-number">8.</span>  IO_T将缓存中的数据，存储到relay-<span class="hljs-keyword">log</span>日志文件,更新master.<span class="hljs-keyword">info</span>文件binlog 文件名和postion，IO_T工作完成<br><span class="hljs-number">9.</span>  SQL_T读取relay-<span class="hljs-keyword">log</span>.<span class="hljs-keyword">info</span>文件，获取到上次执行到的relay-<span class="hljs-keyword">log</span>的位置，作为起点，回放relay-<span class="hljs-keyword">log</span><br><span class="hljs-number">10.</span> SQL_T回放完成之后，会更新relay-<span class="hljs-keyword">log</span>.<span class="hljs-keyword">info</span>文件。<br><span class="hljs-number">11.</span> relay-<span class="hljs-keyword">log</span>会有自动清理的功能。<br>细节：<br><span class="hljs-number">1.</span>主库一旦有新的日志生成，会发送“信号”给binlog dump ，IO线程再请求<br></code></pre></td></tr></table></figure>
+
+<h3 id="主从故障监控"><a href="#主从故障监控" class="headerlink" title="主从故障监控"></a>主从故障监控</h3><h4 id="线程监控"><a href="#线程监控" class="headerlink" title="线程监控"></a>线程监控</h4><h5 id="主库："><a href="#主库：" class="headerlink" title="主库："></a>主库：</h5><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs markdown">mysql&gt; show full processlist\G;<br>每一个从库都会有一行 Binlog Dump 相关的信息<br><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">*** 1. row **</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span>*<br><span class="hljs-code">     Id: 4</span><br><span class="hljs-code">   User: repl</span><br><span class="hljs-code">   Host: 192.168.177.201:45880</span><br><span class="hljs-code">     db: NULL</span><br><span class="hljs-code">Command: Binlog Dump</span><br><span class="hljs-code">   Time: 1450</span><br><span class="hljs-code">  State: Master has sent all binlog to slave; waiting for more updates</span><br><span class="hljs-code">   Info: NULL</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="从库："><a href="#从库：" class="headerlink" title="从库："></a>从库：</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">mysql&gt;</span> <span class="hljs-string">show</span> <span class="hljs-string">slave</span> <span class="hljs-string">status\G;</span><br><span class="hljs-string">***************************</span> <span class="hljs-number">1</span><span class="hljs-string">.</span> <span class="hljs-string">row</span> <span class="hljs-string">***************************</span><br><span class="hljs-string">主库相关信息：</span><br>                  <span class="hljs-attr">Master_Host:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.177</span><span class="hljs-number">.200</span><br>                  <span class="hljs-attr">Master_User:</span> <span class="hljs-string">repl</span><br>                  <span class="hljs-attr">Master_Port:</span> <span class="hljs-number">3306</span><br>                <span class="hljs-attr">Connect_Retry:</span> <span class="hljs-number">10</span><br>              <span class="hljs-attr">Master_Log_File:</span> <span class="hljs-string">mysql-bin.000003</span><br>          <span class="hljs-attr">Read_Master_Log_Pos:</span> <span class="hljs-number">1636</span><br><span class="hljs-string">中继日志：</span><br>               <span class="hljs-attr">Relay_Log_File:</span> <span class="hljs-string">localhost-relay-bin.000002</span><br>                <span class="hljs-attr">Relay_Log_Pos:</span> <span class="hljs-number">897</span><br><span class="hljs-string">复制线程状态：</span><br>             <span class="hljs-attr">Slave_IO_Running:</span> <span class="hljs-literal">Yes</span><br>            <span class="hljs-attr">Slave_SQL_Running:</span> <span class="hljs-literal">Yes</span><br>                <span class="hljs-attr">Last_IO_Errno:</span> <span class="hljs-number">0</span><br>                <span class="hljs-attr">Last_IO_Error:</span> <br>               <span class="hljs-attr">Last_SQL_Errno:</span> <span class="hljs-number">0</span><br>               <span class="hljs-attr">Last_SQL_Error:</span> <br><span class="hljs-string">主从延时相关状态：(非人为)(单位：s)</span><br>        <span class="hljs-attr">Seconds_Behind_Master:</span> <span class="hljs-number">0</span>     <br><span class="hljs-string">延时从库有关的状态：(人为)</span><br>                    <span class="hljs-attr">SQL_Delay:</span> <span class="hljs-number">0</span><br>          <span class="hljs-attr">SQL_Remaining_Delay:</span> <span class="hljs-literal">NULL</span><br><span class="hljs-string">GTID</span> <span class="hljs-string">复制有关的状态：</span><br>           <span class="hljs-attr">Retrieved_Gtid_Set:</span> <span class="hljs-string">6533bab9-8a0a-11ef-b891-000c299acf13:6-8</span><br>            <span class="hljs-attr">Executed_Gtid_Set:</span> <span class="hljs-string">6533bab9-8a0a-11ef-b891-000c299acf13:6-8,</span><br>                               <span class="hljs-string">65c5f12a-8a0a-11ef-8a2e-000c29c3145d:1-2</span><br>                <span class="hljs-attr">Auto_Position:</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
@@ -295,6 +339,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
+      
+    </div>
   
 </div>
 
