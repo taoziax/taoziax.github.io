@@ -7,9 +7,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
-  <link rel="icon" href="/img/logo.png">
-  <meta name="baidu-site-verification" content="codeva-gHZUS12L93" />
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -53,11 +55,11 @@
 <!-- 主题依赖的图标库，不要自行修改 -->
 <!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -74,7 +76,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yftxhy.cn","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/lazyload_h.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yftxhy.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -85,20 +87,6 @@
   <script  src="/js/color-schema.js" ></script>
   
 
-  <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
 
   
 <meta name="generator" content="Hexo 7.1.1"></head>
@@ -114,7 +102,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Taozi</strong>
+      <strong>Fluid</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -313,7 +301,7 @@
 <h3 id="主库"><a href="#主库" class="headerlink" title="主库"></a>主库</h3><hr>
 <h4 id="设置主库server-id并开启主库二进制"><a href="#设置主库server-id并开启主库二进制" class="headerlink" title="设置主库server-id并开启主库二进制"></a>设置主库server-id并开启主库二进制</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros">vim /etc/my.cnf<br><span class="hljs-comment">#开启二进制日志指定文件路径</span><br><span class="hljs-attribute">log-bin</span>=/web/logs/mysql/binlog/mysql-bin<br><span class="hljs-comment">#设置serverID</span><br><span class="hljs-attribute">server-id</span>=1<br></code></pre></td></tr></table></figure>
 
-<p><img src="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090814751.png" srcset="/img/lazyload_h.gif" lazyload></p>
+<p><img src="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090814751.png" srcset="/img/loading.gif" lazyload></p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">主从server-<span class="hljs-built_in">id</span>不能相同<br>每个 MySQL 服务器在主从复制架构中需要有一个唯一的标识符。server_id用于区分不同的服务器实例。如果多个服务器具有相同的 server_id，那么在复制过程中会产生冲突和混乱。<br>如果主从服务器的 server_id 相同，可能会导致双主循环复制的问题，可能会使数据库陷入混乱或崩溃。<br></code></pre></td></tr></table></figure>
 
 <h4 id="主库中创建专用复制用户"><a href="#主库中创建专用复制用户" class="headerlink" title="主库中创建专用复制用户"></a>主库中创建专用复制用户</h4><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">mysql -u root -p                                                 <span class="hljs-comment">//登录mysql终端</span><br><span class="hljs-keyword">CREATE</span> USER <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span><span class="hljs-punctuation">;</span>       <span class="hljs-comment">//创建用户</span><br>GRANT REPLICATION SLAVE <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span><span class="hljs-punctuation">;</span>        <span class="hljs-comment">//授予权限</span><br>flush privileges<span class="hljs-punctuation">;</span>                                                <span class="hljs-comment">//刷新权限</span><br></code></pre></td></tr></table></figure>
@@ -323,7 +311,7 @@
 <h3 id="从库"><a href="#从库" class="headerlink" title="从库"></a>从库</h3><hr>
 <h4 id="设置从库server-id"><a href="#设置从库server-id" class="headerlink" title="设置从库server-id"></a>设置从库server-id</h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">vim /etc/<span class="hljs-keyword">my</span>.cnf<br><span class="hljs-comment">#设置serverID</span><br>server-<span class="hljs-built_in">id</span>=<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090949626.png" srcset="/img/lazyload_h.gif" lazyload></p>
+<p><img src="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090949626.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="执行同步SQL语句"><a href="#执行同步SQL语句" class="headerlink" title="执行同步SQL语句"></a>执行同步SQL语句</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs 1c">CHANGE MASTER TO<br>  MASTER_HOST=&#x27;192.168.177.200&#x27;,<br>  MASTER_USER=&#x27;repl&#x27;,<br>  MASTER_PASSWORD=&#x27;<span class="hljs-number">123456</span>&#x27;,<br>  MASTER_PORT=<span class="hljs-number">3306</span>,<br>  MASTER_LOG_FILE=&#x27;mysql-bin.<span class="hljs-number">000003</span>&#x27;,<br>  MASTER_LOG_POS=<span class="hljs-number">1059</span>,<br>  MASTER_CONNECT_RETRY=<span class="hljs-number">10</span>;<br>  <br>  CHANGE MASTER TO            <br>  MASTER_HOST                 <span class="hljs-comment">//主库的 IP 地址</span><br>  MASTER_USER                 <span class="hljs-comment">//连接主库进行复制的用户名</span><br>  MASTER_PASSWORD             <span class="hljs-comment">//连接主库的用户密码</span><br>  MASTER_PORT                 <span class="hljs-comment">//主库的端口号</span><br>  MASTER_LOG_FILE             <span class="hljs-comment">//指定主库同步二进制日志文件名</span><br>  MASTER_LOG_POS              <span class="hljs-comment">//二进制文件开始同步位置</span><br>  MASTER_CONNECT_RETRY        <span class="hljs-comment">//连接主库失败后重试时间间隔(s)</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="开启同步进程"><a href="#开启同步进程" class="headerlink" title="开启同步进程"></a>开启同步进程</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-literal">start</span> <span class="hljs-literal">slave</span>;<br></code></pre></td></tr></table></figure>
@@ -415,7 +403,7 @@
               
                 <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
                   <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-by"></i>
+                    <i class="iconfont icon-cc-by"></i>
                   </span>
                 </a>
               
@@ -553,7 +541,6 @@
   
   
   
-  
 </div>
 
   </footer>
@@ -650,7 +637,7 @@
 
   
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
     window.anchors.options = {
       placement: CONFIG.anchorjs.placement,
       visible  : CONFIG.anchorjs.visible
