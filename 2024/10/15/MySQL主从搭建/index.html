@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://yftxhy.cn/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090814751.png">
 <meta property="og:image" content="https://yftxhy.cn/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090949626.png">
 <meta property="article:published_time" content="2024-10-15T07:23:51.000Z">
-<meta property="article:modified_time" content="2024-10-15T07:29:09.470Z">
+<meta property="article:modified_time" content="2024-10-18T14:56:46.947Z">
 <meta property="article:author" content="Taozi">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="MySQL">
@@ -305,7 +305,7 @@
 <p><img src="/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/image-20241015090814751.png" srcset="/img/lazyload_h.gif" lazyload></p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">主从server-<span class="hljs-built_in">id</span>不能相同<br>每个 MySQL 服务器在主从复制架构中需要有一个唯一的标识符。server_id用于区分不同的服务器实例。如果多个服务器具有相同的 server_id，那么在复制过程中会产生冲突和混乱。<br>如果主从服务器的 server_id 相同，可能会导致双主循环复制的问题，可能会使数据库陷入混乱或崩溃。<br></code></pre></td></tr></table></figure>
 
-<h4 id="主库中创建专用复制用户"><a href="#主库中创建专用复制用户" class="headerlink" title="主库中创建专用复制用户"></a>主库中创建专用复制用户</h4><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">mysql -u root -p                                                         <span class="hljs-comment">//登录mysql终端</span><br><span class="hljs-keyword">CREATE</span> USER <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span><span class="hljs-punctuation">;</span>               <span class="hljs-comment">//创建用户</span><br>GRANT REPLICATION SLAVE <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span><span class="hljs-punctuation">;</span> 			    <span class="hljs-comment">//授予权限</span><br>flush privileges<span class="hljs-punctuation">;</span>                                        			    <span class="hljs-comment">//刷新权限</span><br></code></pre></td></tr></table></figure>
+<h4 id="主库中创建专用复制用户"><a href="#主库中创建专用复制用户" class="headerlink" title="主库中创建专用复制用户"></a>主库中创建专用复制用户</h4><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">mysql -u root -p                                                 <span class="hljs-comment">//登录mysql终端</span><br><span class="hljs-keyword">CREATE</span> USER <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span><span class="hljs-punctuation">;</span>       <span class="hljs-comment">//创建用户</span><br>GRANT REPLICATION SLAVE <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;repl&#x27;</span>@<span class="hljs-string">&#x27;192.168.177.%&#x27;</span><span class="hljs-punctuation">;</span>        <span class="hljs-comment">//授予权限</span><br>flush privileges<span class="hljs-punctuation">;</span>                                                <span class="hljs-comment">//刷新权限</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="查看二进制文件"><a href="#查看二进制文件" class="headerlink" title="查看二进制文件"></a>查看二进制文件</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">mysql&gt;  show master status\G;<br><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">*** 1. row **</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span>*<br><span class="hljs-code">             File: mysql-bin.000003</span><br><span class="hljs-code">         Position: 1059</span><br><span class="hljs-code">     Binlog_Do_DB: </span><br><span class="hljs-code"> Binlog_Ignore_DB: </span><br><span class="hljs-code">Executed_Gtid_Set: 6533bab9-8a0a-11ef-b891-000c299acf13:1-5</span><br></code></pre></td></tr></table></figure>
 
@@ -422,6 +422,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="MHA高可用+Atlas读写分离">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MHA高可用+Atlas读写分离</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
