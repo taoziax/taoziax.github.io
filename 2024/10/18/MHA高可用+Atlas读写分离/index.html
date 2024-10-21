@@ -22,18 +22,18 @@
     <meta name="description" content="高可用架构方案123456负载均衡:有一定的高可用性 LVS  Nginx主备系统:有高可用性,需要切换,单活架构keepalived,  MHA, MMM真正高可用(多活-并发): NDB Cluster  Oracle RAC  Sysbase cluster   , InnoDB Cluster（MGR）,PXC , MGC  主从架构演变介绍基础架构123456一主一从一主多从双主多级主从">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MHA高可用+Atlas读写分离">
-<meta property="og:url" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/index.html">
+<meta property="og:url" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/index.html">
 <meta property="og:site_name" content="Taozi">
 <meta property="og:description" content="高可用架构方案123456负载均衡:有一定的高可用性 LVS  Nginx主备系统:有高可用性,需要切换,单活架构keepalived,  MHA, MMM真正高可用(多活-并发): NDB Cluster  Oracle RAC  Sysbase cluster   , InnoDB Cluster（MGR）,PXC , MGC  主从架构演变介绍基础架构123456一主一从一主多从双主多级主从">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241016150436973.png">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241017113416352.png">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241017113503674.png">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241017113517921.png">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018105629154.png">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018105634345.png">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018155325464.png">
-<meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018160652891.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241016150436973.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241017113416352.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241017113503674.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241017113517921.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018105629154.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018105634345.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018155325464.png">
+<meta property="og:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018160652891.png">
 <meta property="article:published_time" content="2024-10-18T13:54:48.000Z">
 <meta property="article:modified_time" content="2024-10-21T02:25:10.253Z">
 <meta property="article:author" content="Taozi">
@@ -42,7 +42,7 @@
 <meta property="article:tag" content="MHA">
 <meta property="article:tag" content="Atlas">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241016150436973.png">
+<meta name="twitter:image" content="https://yftxhy.site/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241016150436973.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -86,7 +86,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yftxhy.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"?06a5d424ca58db4d2bcc51280f4bbb00","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yftxhy.site","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"?06a5d424ca58db4d2bcc51280f4bbb00","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -616,7 +616,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>MHA高可用+Atlas读写分离</div>
-      <div>https://yftxhy.cn/2024/10/18/MHA高可用+Atlas读写分离/</div>
+      <div>https://yftxhy.site/2024/10/18/MHA高可用+Atlas读写分离/</div>
     </div>
     <div class="license-meta">
       
