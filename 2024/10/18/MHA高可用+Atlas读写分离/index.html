@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018155325464.png">
 <meta property="og:image" content="https://yftxhy.cn/2024/10/18/MHA%E9%AB%98%E5%8F%AF%E7%94%A8+Atlas%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/image-20241018160652891.png">
 <meta property="article:published_time" content="2024-10-18T13:54:48.000Z">
-<meta property="article:modified_time" content="2024-10-19T02:51:50.441Z">
+<meta property="article:modified_time" content="2024-10-21T02:25:10.253Z">
 <meta property="article:author" content="Taozi">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="MySQL">
@@ -261,7 +261,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.4k 字
+          4.5k 字
         
       </span>
     
@@ -272,7 +272,7 @@
         
         
         
-          37 分钟
+          38 分钟
         
       </span>
     
@@ -560,6 +560,10 @@
 
 <p>保存</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">SAVE CONFIG;<br></code></pre></td></tr></table></figure>
+
+<h3 id="自动分表"><a href="#自动分表" class="headerlink" title="自动分表"></a>自动分表</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs applescript">使用Atlas的分表功能时，首先需要在配置文件test.cnf设置tables参数。<br>tables参数设置格式：数据库名.表名.分表字段.子表数量，<br>比如：<br>你的数据库名叫school，表名叫stu，分表字段叫<span class="hljs-built_in">id</span>，总共分为<span class="hljs-number">2</span>张表，那么就写为school.stu.<span class="hljs-built_in">id</span><span class="hljs-number">.2</span>，如果还有其他的分表，以逗号分隔即可。<br></code></pre></td></tr></table></figure>
+
+<h3 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h3><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xl">M<span class="hljs-function"><span class="hljs-title">ySQL</span>-Router    ---&gt;</span> MySQL官方<br>P<span class="hljs-function"><span class="hljs-title">roxySQL</span>         ---&gt;</span>Percona<br>M<span class="hljs-function"><span class="hljs-title">axscale</span>         ---&gt;</span> MariaDB<br></code></pre></td></tr></table></figure>
 
                 
               </div>
