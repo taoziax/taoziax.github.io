@@ -19,12 +19,12 @@
   <meta name="author" content="Taozi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Redis复制集(主从)原理1234567891. 副本库通过slaveof 10.0.0.51 6379命令,连接主库,并发送SYNC给主库 2. 主库收到SYNC,会立即触发BGSAVE,后台保存RDB,发送给副本库3. 副本库接收后会应用RDB快照4. 主库会陆续将中间产生的新的操作,保存并发送给副本库5. 到此,我们主复制集就正常工作了6. 再此以后,主库只要发生新的操作,都会以命令传播的">
+    <meta name="description" content="Redis复制集(主从)原理1234567891. 副本库通过slaveof 192.168.177.200 6379命令,连接主库,并发送SYNC给主库 2. 主库收到SYNC,会立即触发BGSAVE,后台保存RDB,发送给副本库3. 副本库接收后会应用RDB快照4. 主库会陆续将中间产生的新的操作,保存并发送给副本库5. 到此,我们主复制集就正常工作了6. 再此以后,主库只要发生新的操作,都会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis主从和集群搭建">
 <meta property="og:url" content="https://yftxhy.site/2024/11/05/Redis%E4%B8%BB%E4%BB%8E%E5%92%8C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="Taozi">
-<meta property="og:description" content="Redis复制集(主从)原理1234567891. 副本库通过slaveof 10.0.0.51 6379命令,连接主库,并发送SYNC给主库 2. 主库收到SYNC,会立即触发BGSAVE,后台保存RDB,发送给副本库3. 副本库接收后会应用RDB快照4. 主库会陆续将中间产生的新的操作,保存并发送给副本库5. 到此,我们主复制集就正常工作了6. 再此以后,主库只要发生新的操作,都会以命令传播的">
+<meta property="og:description" content="Redis复制集(主从)原理1234567891. 副本库通过slaveof 192.168.177.200 6379命令,连接主库,并发送SYNC给主库 2. 主库收到SYNC,会立即触发BGSAVE,后台保存RDB,发送给副本库3. 副本库接收后会应用RDB快照4. 主库会陆续将中间产生的新的操作,保存并发送给副本库5. 到此,我们主复制集就正常工作了6. 再此以后,主库只要发生新的操作,都会">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yftxhy.site/2024/11/05/Redis%E4%B8%BB%E4%BB%8E%E5%92%8C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/image-20241029090348528.png">
 <meta property="og:image" content="https://yftxhy.site/2024/11/05/Redis%E4%B8%BB%E4%BB%8E%E5%92%8C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/image-20241029091343828.png">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://yftxhy.site/2024/11/05/Redis%E4%B8%BB%E4%BB%8E%E5%92%8C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/image-20241105153335193.png">
 <meta property="og:image" content="https://yftxhy.site/2024/11/05/Redis%E4%B8%BB%E4%BB%8E%E5%92%8C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/image-20241105153933906.png">
 <meta property="article:published_time" content="2024-11-05T12:40:32.000Z">
-<meta property="article:modified_time" content="2024-11-05T08:55:03.305Z">
+<meta property="article:modified_time" content="2024-11-05T08:57:56.326Z">
 <meta property="article:author" content="Taozi">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Redis">
@@ -328,7 +328,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Redis复制集-主从"><a href="#Redis复制集-主从" class="headerlink" title="Redis复制集(主从)"></a>Redis复制集(主从)</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">1. 副本库通过slaveof 10.0.0.51 6379命令,连接主库,并发送SYNC给主库 <br>2. 主库收到SYNC,会立即触发BGSAVE,后台保存RDB,发送给副本库<br>3. 副本库接收后会应用RDB快照<br>4. 主库会陆续将中间产生的新的操作,保存并发送给副本库<br>5. 到此,我们主复制集就正常工作了<br>6. 再此以后,主库只要发生新的操作,都会以命令传播的形式自动发送给副本库.<br>7. 所有复制相关信息,从info信息中都可以查到.即使重启任何节点,他的主从关系依然都在.<br>8. 如果发生主从关系断开时,从库数据没有任何损坏,在下次重连之后,从库发送PSYNC给主库<br>9. 主库只会将从库缺失部分的数据同步给从库应用,达到快速恢复主从的目的<br></code></pre></td></tr></table></figure>
+                <h2 id="Redis复制集-主从"><a href="#Redis复制集-主从" class="headerlink" title="Redis复制集(主从)"></a>Redis复制集(主从)</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">1. 副本库通过slaveof 192.168.177.200 6379命令,连接主库,并发送SYNC给主库 <br>2. 主库收到SYNC,会立即触发BGSAVE,后台保存RDB,发送给副本库<br>3. 副本库接收后会应用RDB快照<br>4. 主库会陆续将中间产生的新的操作,保存并发送给副本库<br>5. 到此,我们主复制集就正常工作了<br>6. 再此以后,主库只要发生新的操作,都会以命令传播的形式自动发送给副本库.<br>7. 所有复制相关信息,从info信息中都可以查到.即使重启任何节点,他的主从关系依然都在.<br>8. 如果发生主从关系断开时,从库数据没有任何损坏,在下次重连之后,从库发送PSYNC给主库<br>9. 主库只会将从库缺失部分的数据同步给从库应用,达到快速恢复主从的目的<br></code></pre></td></tr></table></figure>
 
 <h3 id="数据一致性"><a href="#数据一致性" class="headerlink" title="数据一致性"></a>数据一致性</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">min-slaves-to-write 1<br>min-slaves-max-lag  3<br></code></pre></td></tr></table></figure>
 
