@@ -1,3 +1,4 @@
+https://yftxhy.site/2024/11/05/Redis%E4%B8%BB%E4%BB%8E%E5%92%8C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/
 https://yftxhy.site/2024/10/25/Mycat%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E9%83%A8%E7%BD%B2/
 https://yftxhy.site/2024/10/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA/
 https://yftxhy.site/2022/11/30/Docker%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%89%E8%A3%85/
@@ -19,6 +20,10 @@ https://yftxhy.site/tags/Atlas/
 https://yftxhy.site/tags/Tomcat/
 https://yftxhy.site/tags/Nginx/
 https://yftxhy.site/tags/Mycat/
+https://yftxhy.site/tags/Redis/
+https://yftxhy.site/tags/sentinel/
+https://yftxhy.site/tags/Cluster/
 https://yftxhy.site/categories/Docker/
 https://yftxhy.site/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/
 https://yftxhy.site/categories/MySQL/
+https://yftxhy.site/categories/Redis/
